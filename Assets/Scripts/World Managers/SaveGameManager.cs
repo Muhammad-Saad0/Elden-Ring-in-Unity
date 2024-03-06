@@ -30,4 +30,9 @@ public class SaveGameManager : MonoBehaviour
 
         yield return null;
     }
+
+    public int GetWorldSceneIndex()
+    {
+        return WorldSceneIndex;
+    }
 }

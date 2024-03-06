@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class CharacterManager : MonoBehaviour
 {
-    
-    void Start()
+    protected virtual void Awake()
     {
-        DontDestroyOnLoad(this);    
+        DontDestroyOnLoad(gameObject);
+    }
+
+    protected virtual void Start()
+    {
     }
 }
