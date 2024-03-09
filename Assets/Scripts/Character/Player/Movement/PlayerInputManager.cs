@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -9,7 +10,10 @@ public class PlayerInputManager : MonoBehaviour
     PlayerControls playerControls;
 
     [Header("Player Input Variables")]
-    [SerializeField] private Vector2 playerMovementInput;
+    public float horizontalInput;
+    public float verticalInput;
+    public float moveAmount;
+
     private void Awake()
     {
         //MAKE THE CLASS SINGLETON
@@ -62,6 +66,21 @@ public class PlayerInputManager : MonoBehaviour
 
     private void assignMovementInputValue(InputAction.CallbackContext context)
     {
-        playerMovementInput = context.ReadValue<Vector2>();
+        Vector2 playerMovementInput = context.ReadValue<Vector2>();
+        horizontalInput = playerMovementInput.x;
+        verticalInput = playerMovementInput.y;
+
+        //  THIS IS REQUIRED TO DETERMINE HOW MUCH OF THE JOYSTICK IS MOVED
+        //  CLAMP01 CLAMPS THE VALUE BETWEEN 0 AND 1
+        moveAmount = Mathf.Clamp01(Math.Abs(horizontalInput) + Math.Abs(verticalInput));
+
+        if(moveAmount > 0 && moveAmount <= 0.5f)
+        {
+            moveAmount = 0.5f;
+        }
+        else if(moveAmount > 0.5f)
+        {
+            moveAmount = 1f;
+        }
     }
 }

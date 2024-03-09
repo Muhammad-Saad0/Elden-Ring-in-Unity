@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class CharacterManager : MonoBehaviour
 {
+    public CharacterController playerController;
+
     protected virtual void Awake()
     {
         DontDestroyOnLoad(gameObject);
+
+        playerController = GetComponent<CharacterController>();
     }
 
-    protected virtual void Start()
+    protected virtual void Update()
     {
     }
 }

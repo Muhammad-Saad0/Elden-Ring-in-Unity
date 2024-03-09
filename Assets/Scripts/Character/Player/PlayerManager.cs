@@ -13,9 +13,9 @@ public class PlayerManager : CharacterManager
         playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
     }
 
-    override protected void Start()
+    override protected void Update()
     {
-        base.Start();
+        base.Update();
 
         //HANDLE CHARACTER MOVEMENT
         playerLocomotionManager.HandleAllMovement();
