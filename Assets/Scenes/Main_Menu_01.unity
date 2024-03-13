@@ -330,6 +330,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -245}
   m_SizeDelta: {x: 400, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!20 &312441515 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 174858768508389236, guid: 055875cb27222e24383ac5e05903b356, type: 3}
+  m_PrefabInstance: {fileID: 174858768282720538}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &445664166
 GameObject:
   m_ObjectHideFlags: 0
@@ -1185,13 +1190,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 174858768196942462, guid: 055875cb27222e24383ac5e05903b356, type: 3}
+      propertyPath: cameraObject
+      value: 
+      objectReference: {fileID: 312441515}
     - target: {fileID: 174858768508389237, guid: 055875cb27222e24383ac5e05903b356, type: 3}
       propertyPath: m_LocalPosition.y
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 174858768508389237, guid: 055875cb27222e24383ac5e05903b356, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3
+      value: -5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 055875cb27222e24383ac5e05903b356, type: 3}

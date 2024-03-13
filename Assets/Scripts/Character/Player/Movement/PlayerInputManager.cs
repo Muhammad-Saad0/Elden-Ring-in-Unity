@@ -64,6 +64,25 @@ public class PlayerInputManager : MonoBehaviour
         playerControls.Enable();
     }
 
+    /* THIS IS FOR TESTING
+       enable the inputs only if the window is focused
+       so that the inputs dont register on both windows
+    */
+    private void OnApplicationFocus(bool focus)
+    {
+        if(enabled)
+        {
+            if (focus)
+            {
+                playerControls.Enable();
+            }
+            else
+            {
+                playerControls.Disable();
+            }
+        }
+    }
+
     private void assignMovementInputValue(InputAction.CallbackContext context)
     {
         Vector2 playerMovementInput = context.ReadValue<Vector2>();
