@@ -6216,10 +6216,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4028250183184810}
-  - component: {fileID: 95139111640682058}
   - component: {fileID: 7528519054195709969}
   - component: {fileID: 6722713571068265016}
+  - component: {fileID: 7297651176241088859}
   - component: {fileID: 6450607450139139082}
+  - component: {fileID: 3509713145289188256}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -6244,27 +6245,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &95139111640682058
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1948535115976630}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: e53c0edb812c5344698949e4671d1a2c, type: 3}
-  m_Controller: {fileID: 9100000, guid: 47f29fac49912c84b964c579169fe933, type: 2}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &7528519054195709969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6297,6 +6277,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b44e4d50252a394ba7d521abda0fad0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterController: {fileID: 0}
+  characterNetworkManager: {fileID: 0}
+--- !u!114 &7297651176241088859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1948535115976630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c4f9f39dddce044fa0d7fead9b2d8b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  networkPosition:
+    m_InternalValue: {x: 0, y: 0, z: 0}
+  networkReferenceVelocity: {x: 0, y: 0, z: 0}
+  networkSmoothTime: 0.1
 --- !u!114 &6450607450139139082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6309,6 +6307,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2fa62ac6c2bb6c4e9a38b2f6236a8a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walkingSpeed: 2
+  runningSpeed: 5
+--- !u!143 &3509713145289188256
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1948535115976630}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 1.95
+  m_Radius: 0.22
+  m_SlopeLimit: 45
+  m_StepOffset: 0
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &1957902325582026
 GameObject:
   m_ObjectHideFlags: 0
