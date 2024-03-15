@@ -952,11 +952,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 174858768508389237, guid: 055875cb27222e24383ac5e05903b356, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 174858768508389237, guid: 055875cb27222e24383ac5e05903b356, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3
+      value: -3.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 055875cb27222e24383ac5e05903b356, type: 3}
@@ -1303,6 +1303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57ec91e7c6d99394dbf561df633faa7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerManager: {fileID: 0}
   horizontalInput: 0
   verticalInput: 0
   moveAmount: 0

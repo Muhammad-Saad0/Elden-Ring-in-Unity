@@ -31,6 +31,9 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     //  THIS FUNCTION GETS CALLED IN PLAYER MANAGER
     public void HandleAllMovement()
     {
+        if (playerManager == null)
+            return;
+
         HandleGroundedMovement();
         HandleRotationMovement();
         //  HANDLE AERIEL MOVEMENT
@@ -58,6 +61,11 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         {
             playerManager.characterController.Move(moveDirection * runningSpeed * Time.deltaTime);
         }
+
+        //  ANIMATING THE PLAYER
+        /*  WE ARE PASSING 0 FOR HORIZONTAL MOVEMENT BECAUSE WHEN WE ARE NOT LOCKED ON HORIZONTAL MOVEMENT IS 
+        NOT REQUIRED */
+        playerManager.playerAnimationController.UpdateCharacterAnimatorParameters(0f, moveAmount);
     }
 
     private void HandleRotationMovement()

@@ -9,6 +9,9 @@ public class PlayerInputManager : MonoBehaviour
 
     PlayerControls playerControls;
 
+    //THIS IS SET UP IN ONNETWORKSPAWN IN PLAYERMANAGER
+    [HideInInspector] public PlayerManager playerManager;
+
     [Header("Player Movement Variables")]
     public float horizontalInput;
     public float verticalInput;

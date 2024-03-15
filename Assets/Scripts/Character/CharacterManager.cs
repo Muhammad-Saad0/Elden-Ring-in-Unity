@@ -7,6 +7,7 @@ public class CharacterManager : NetworkBehaviour
 {
     [HideInInspector] public CharacterController characterController;
     [HideInInspector] public CharacterNetworkManager characterNetworkManager;
+    [HideInInspector] public Animator characterAnimator;
 
     protected virtual void Awake()
     {
@@ -14,6 +15,7 @@ public class CharacterManager : NetworkBehaviour
 
         characterController = GetComponent<CharacterController>();
         characterNetworkManager = GetComponent<CharacterNetworkManager>();
+        characterAnimator = GetComponent<Animator>();
     }
 
     protected virtual void Update()

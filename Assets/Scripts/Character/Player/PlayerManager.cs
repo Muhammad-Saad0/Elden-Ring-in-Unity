@@ -5,13 +5,15 @@ using Unity.Netcode;
 
 public class PlayerManager : CharacterManager
 {
-    PlayerLocomotionManager playerLocomotionManager;
+    [HideInInspector] public PlayerLocomotionManager playerLocomotionManager;
+    [HideInInspector] public PlayerAnimationController playerAnimationController;
 
     override protected void Awake()
     {
         base.Awake();
 
         playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
+        playerAnimationController = GetComponent<PlayerAnimationController>();
     }
 
     override protected void Update()
@@ -42,12 +44,19 @@ public class PlayerManager : CharacterManager
     {
         base.OnNetworkSpawn();
 
-        //SETTING UP PLAYER MANAGER INSIDE PLAYER CAMERA SCRIPT
-        /*  if we are the owner then we set this up otherwise camera will start
-         following some other players character in your game */
+        
         if (IsOwner)
         {
+            //  SETTING UP PLAYER MANAGER INSIDE PLAYER CAMERA SCRIPT
+            /*  if we are the owner then we set this up otherwise camera will start
+                following some other players character in your game */
             PlayerCamera.instance.playerManager = this;
+
+            //  SETTING UP THE PLAYER MANAGER IN INPUT MANAGER
+            /*  we make sure the player manager that is being set up in PLAYERINPUTMANAGER script
+                is the local player (meaning we are owner of this player) otherwise we will start performing
+                actions on someone else's character */
+            PlayerInputManager.instance.playerManager = this;
         }
     }
 }
