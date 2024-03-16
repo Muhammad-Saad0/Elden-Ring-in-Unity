@@ -21,6 +21,10 @@ public class PlayerInputManager : MonoBehaviour
     public float horizontalCameraInput;
     public float verticalCameraInput;
 
+    [Header("Player Action Variables")]
+    public bool performDodge = false;
+    public bool sprintInput = false;
+
     private void Awake()
     {
         //MAKE THE CLASS SINGLETON
@@ -67,6 +71,11 @@ public class PlayerInputManager : MonoBehaviour
 
             playerControls.PlayerMovement.Movement.performed += assignMovementInputValue;
             playerControls.CameraMovement.Movement.performed += assignCameraInputValue;
+            playerControls.PlayerActions.Dodge.performed += assignDodgeInputValue;
+
+            //  SPRINTING INPUT
+            playerControls.PlayerActions.Sprint.performed += i => sprintInput = true;
+            playerControls.PlayerActions.Sprint.canceled += i => sprintInput = false;
         }
 
         //SUBSCRIBE TO THE ACTION EVENT
@@ -116,5 +125,10 @@ public class PlayerInputManager : MonoBehaviour
         Vector2 playerCameraMovementInput = context.ReadValue<Vector2>();
         horizontalCameraInput = playerCameraMovementInput.x;
         verticalCameraInput = playerCameraMovementInput.y;
+    }
+
+    private void assignDodgeInputValue(InputAction.CallbackContext context)
+    {
+        performDodge = true;
     }
 }
