@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
@@ -7,6 +5,8 @@ public class CharacterManager : NetworkBehaviour
 {
     [HideInInspector] public CharacterController characterController;
     [HideInInspector] public CharacterNetworkManager characterNetworkManager;
+    [HideInInspector] public Animator characterAnimator;
+    [HideInInspector] public CharacterAnimationController characterAnimationController;
 
     protected virtual void Awake()
     {
@@ -14,6 +14,8 @@ public class CharacterManager : NetworkBehaviour
 
         characterController = GetComponent<CharacterController>();
         characterNetworkManager = GetComponent<CharacterNetworkManager>();
+        characterAnimator = GetComponent<Animator>();
+        characterAnimationController = GetComponent<CharacterAnimationController>();
     }
 
     protected virtual void Update()
@@ -23,6 +25,10 @@ public class CharacterManager : NetworkBehaviour
             //  IF WE ARE THE OWNER UPDATE THE NETWORK VARIABLES
             characterNetworkManager.networkPosition.Value = transform.position;
             characterNetworkManager.networkRotation.Value = transform.rotation;
+
+            //  SETTING ANIMATION NETWORK VARIABLES
+            characterNetworkManager.animatorHorizontalValue.Value = characterAnimator.GetFloat("Horizontal");
+            characterNetworkManager.animatorVerticalValue.Value = characterAnimator.GetFloat("Vertical");
         }
         else
         {
@@ -37,6 +43,10 @@ public class CharacterManager : NetworkBehaviour
                 (transform.rotation,
                 characterNetworkManager.networkRotation.Value,
                 characterNetworkManager.networkRotationSmoothTime);
+
+            characterAnimationController.UpdateCharacterAnimatorParameters
+                (characterNetworkManager.animatorHorizontalValue.Value,
+                characterNetworkManager.animatorVerticalValue.Value);
         }
     }
 
