@@ -7,6 +7,7 @@ public class PlayerManager : CharacterManager
 {
     [HideInInspector] public PlayerLocomotionManager playerLocomotionManager;
     [HideInInspector] public PlayerAnimationController playerAnimationController;
+    [HideInInspector] public PlayerNetworkManager playerNetworkManager;
 
     override protected void Awake()
     {
@@ -14,6 +15,7 @@ public class PlayerManager : CharacterManager
 
         playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
         playerAnimationController = GetComponent<PlayerAnimationController>();
+        playerNetworkManager = GetComponent<PlayerNetworkManager>();
     }
 
     override protected void Update()

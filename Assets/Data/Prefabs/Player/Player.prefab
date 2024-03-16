@@ -6282,6 +6282,11 @@ MonoBehaviour:
   characterController: {fileID: 0}
   characterNetworkManager: {fileID: 0}
   characterAnimator: {fileID: 0}
+  characterAnimationController: {fileID: 0}
+  isPerformingAction: 0
+  applyRootMotion: 0
+  canMove: 1
+  canRotate: 1
   playerLocomotionManager: {fileID: 0}
   playerAnimationController: {fileID: 0}
 --- !u!114 &7297651176241088859
@@ -6303,6 +6308,10 @@ MonoBehaviour:
   networkReferenceVelocity: {x: 0, y: 0, z: 0}
   networkSmoothTime: 0.1
   networkRotationSmoothTime: 0.1
+  animatorHorizontalValue:
+    m_InternalValue: 0
+  animatorVerticalValue:
+    m_InternalValue: 0
 --- !u!114 &7922289625653478464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6328,8 +6337,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2fa62ac6c2bb6c4e9a38b2f6236a8a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkingSpeed: 2
-  runningSpeed: 5
+  walkingSpeed: 1.6
+  runningSpeed: 3.8
   rotationSpeed: 12
 --- !u!143 &3509713145289188256
 CharacterController:

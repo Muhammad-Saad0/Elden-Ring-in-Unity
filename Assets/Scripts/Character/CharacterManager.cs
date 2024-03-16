@@ -8,6 +8,12 @@ public class CharacterManager : NetworkBehaviour
     [HideInInspector] public Animator characterAnimator;
     [HideInInspector] public CharacterAnimationController characterAnimationController;
 
+    [Header("Flags")]
+    public bool isPerformingAction = false;
+    public bool applyRootMotion = false;
+    public bool canMove = true;
+    public bool canRotate = true;
+
     protected virtual void Awake()
     {
         DontDestroyOnLoad(gameObject);
