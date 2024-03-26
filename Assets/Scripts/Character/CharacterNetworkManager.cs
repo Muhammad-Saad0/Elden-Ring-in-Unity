@@ -44,6 +44,7 @@ public class CharacterNetworkManager : NetworkBehaviour
         character = GetComponent<CharacterManager>();
     }
 
+
     #region Rpcs(Remote Procedure Calls)
     [ServerRpc]
     public void NotifyServerOfPlayerActionAnimationServerRpc

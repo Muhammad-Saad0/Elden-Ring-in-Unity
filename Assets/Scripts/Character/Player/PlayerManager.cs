@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Unity.Netcode;
 
 public class PlayerManager : CharacterManager
 {
@@ -9,6 +8,8 @@ public class PlayerManager : CharacterManager
     [HideInInspector] public PlayerAnimationController playerAnimationController;
     [HideInInspector] public PlayerNetworkManager playerNetworkManager;
     [HideInInspector] public PlayerStatsManager playerStatsManager;
+
+    
 
     override protected void Awake()
     {
@@ -62,6 +63,7 @@ public class PlayerManager : CharacterManager
                 is the local player (meaning we are owner of this player) otherwise we will start performing
                 actions on someone else's character */
             PlayerInputManager.instance.playerManager = this;
+            SaveGameManager.instance.player = this;
 
             //  CHANGING UI WHEN THERE IS A CHANGE IN STAMINA
             playerNetworkManager.currentStamina.OnValueChanged += PlayerUIManager.instance.hudManager.setNewStaminaValue;
