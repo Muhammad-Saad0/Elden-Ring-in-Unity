@@ -17,8 +17,13 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
     [SerializeField] private float walkingSpeed = 2f;
     [SerializeField] private float runningSpeed = 5f;
-    [SerializeField] private float sprintSpeed = 7f;
     [SerializeField] private float rotationSpeed = 12f;
+
+    //  SPRINTING VARIABLES
+    [SerializeField] private float sprintSpeed = 7f;
+    [SerializeField] private float sprintingStaminaCost = 3f;
+    [SerializeField] private float sprintingStaminaReductionTimer = 0f;
+    [SerializeField] private float sprintingStaminaReductionInterval = 0.1f;
 
     private PlayerManager playerManager;
 
@@ -165,7 +170,9 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
     private void HandleSprintAction()
     {
-        if (PlayerInputManager.instance.sprintInput && !playerManager.isPerformingAction)
+        if (PlayerInputManager.instance.sprintInput 
+            && !playerManager.isPerformingAction 
+            && playerManager.playerNetworkManager.currentStamina.Value > 0)
         {
             if(moveAmount > 0.5f)
             {
@@ -179,6 +186,20 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         else
         {
             playerManager.playerNetworkManager.sprintingValue.Value = false;
+        }
+
+        //  DECREASING THE STAMINA WHEN SPRINTING
+        if (playerManager.playerNetworkManager.sprintingValue.Value)
+        {
+            if(sprintingStaminaReductionTimer >= sprintingStaminaReductionInterval)
+            {
+                sprintingStaminaReductionTimer = 0;
+                playerManager.playerNetworkManager.currentStamina.Value -= sprintingStaminaCost;
+            }
+            else
+            {
+                sprintingStaminaReductionTimer += Time.deltaTime;
+            }
         }
     }
 

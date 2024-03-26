@@ -6218,9 +6218,10 @@ GameObject:
   - component: {fileID: 4028250183184810}
   - component: {fileID: 7528519054195709969}
   - component: {fileID: 6722713571068265016}
+  - component: {fileID: 6450607450139139082}
+  - component: {fileID: 7054106833096726965}
   - component: {fileID: 7297651176241088859}
   - component: {fileID: 7922289625653478464}
-  - component: {fileID: 6450607450139139082}
   - component: {fileID: 3509713145289188256}
   - component: {fileID: 1761086752574069630}
   m_Layer: 0
@@ -6289,6 +6290,38 @@ MonoBehaviour:
   canRotate: 1
   playerLocomotionManager: {fileID: 0}
   playerAnimationController: {fileID: 0}
+  playerNetworkManager: {fileID: 0}
+  playerStatsManager: {fileID: 0}
+--- !u!114 &6450607450139139082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1948535115976630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2fa62ac6c2bb6c4e9a38b2f6236a8a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkingSpeed: 1.6
+  runningSpeed: 3.8
+  sprintSpeed: 7
+  rotationSpeed: 12
+  sprintingStaminaCost: 3
+--- !u!114 &7054106833096726965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1948535115976630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b6be22ae9a45d34c98f33488d08b793, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  staminaMultiplier: 10
 --- !u!114 &7297651176241088859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6312,6 +6345,14 @@ MonoBehaviour:
     m_InternalValue: 0
   animatorVerticalValue:
     m_InternalValue: 0
+  sprintingValue:
+    m_InternalValue: 0
+  endurance:
+    m_InternalValue: 0
+  currentStamina:
+    m_InternalValue: 0
+  maximumStamina:
+    m_InternalValue: 0
 --- !u!114 &7922289625653478464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6325,21 +6366,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animationDamptime: 0.1
---- !u!114 &6450607450139139082
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1948535115976630}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2fa62ac6c2bb6c4e9a38b2f6236a8a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkingSpeed: 1.6
-  runningSpeed: 3.8
-  rotationSpeed: 12
 --- !u!143 &3509713145289188256
 CharacterController:
   m_ObjectHideFlags: 0

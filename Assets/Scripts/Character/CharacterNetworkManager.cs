@@ -25,13 +25,25 @@ public class CharacterNetworkManager : NetworkBehaviour
         (0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     [HideInInspector] public NetworkVariable<float> animatorVerticalValue = new NetworkVariable<float>
         (0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
+    [Header("Flags")]
     [HideInInspector] public NetworkVariable<bool> sprintingValue = new NetworkVariable<bool>
         (false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
+    [Header("Stats")]
+    //  STAMINA VARIABLES
+    [HideInInspector] public NetworkVariable<int> endurance = new NetworkVariable<int>
+        (10, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    [HideInInspector] public NetworkVariable<float> currentStamina = new NetworkVariable<float>
+        (0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    [HideInInspector] public NetworkVariable<float> maximumStamina = new NetworkVariable<float>
+        (0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     protected virtual void Awake()
     {
         character = GetComponent<CharacterManager>();
     }
+
 
     #region Rpcs(Remote Procedure Calls)
     [ServerRpc]

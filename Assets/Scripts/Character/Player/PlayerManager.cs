@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Unity.Netcode;
 
 public class PlayerManager : CharacterManager
 {
     [HideInInspector] public PlayerLocomotionManager playerLocomotionManager;
     [HideInInspector] public PlayerAnimationController playerAnimationController;
     [HideInInspector] public PlayerNetworkManager playerNetworkManager;
+    [HideInInspector] public PlayerStatsManager playerStatsManager;
+
+    
 
     override protected void Awake()
     {
@@ -16,6 +18,7 @@ public class PlayerManager : CharacterManager
         playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
         playerAnimationController = GetComponent<PlayerAnimationController>();
         playerNetworkManager = GetComponent<PlayerNetworkManager>();
+        playerStatsManager = GetComponent<PlayerStatsManager>();
     }
 
     override protected void Update()
@@ -27,6 +30,7 @@ public class PlayerManager : CharacterManager
             return;
         //HANDLE CHARACTER MOVEMENT
         playerLocomotionManager.HandleAllMovement();
+        playerStatsManager.RegenerateStamina();
     }
 
     protected override void LateUpdate()
@@ -59,6 +63,24 @@ public class PlayerManager : CharacterManager
                 is the local player (meaning we are owner of this player) otherwise we will start performing
                 actions on someone else's character */
             PlayerInputManager.instance.playerManager = this;
+            SaveGameManager.instance.player = this;
+
+            //  CHANGING UI WHEN THERE IS A CHANGE IN STAMINA
+            playerNetworkManager.currentStamina.OnValueChanged += PlayerUIManager.instance.hudManager.setNewStaminaValue;
+
+            //  SUBSCRIBING TO VALUE CHANGE TO RESET THE DELAY TIMER
+            playerNetworkManager.currentStamina.OnValueChanged += playerStatsManager.ResetStaminaDelayTimer;
+
+            //  CALCULATING MAX STAMINA
+            //  -----ENDURANCE IS HARD CODED THIS SHOULD CHANGE-----
+            int maxStamina = playerStatsManager.CalculateMaxStaminaBasedOnEnduranceLevel
+                (10);
+
+            //  SETTING UP THE MAX STAMINA WHEN PLAYER SPAWNS
+            //  We also set the current stamina to max stamina at the start
+            playerNetworkManager.maximumStamina.Value = maxStamina;
+            PlayerUIManager.instance.hudManager.setMaxStaminaValue(maxStamina);
+            playerNetworkManager.currentStamina.Value = maxStamina;
         }
     }
 }

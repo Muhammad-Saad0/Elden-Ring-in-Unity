@@ -7,9 +7,10 @@ public class PlayerUIManager : MonoBehaviour
 {
     public static PlayerUIManager instance;
 
+    [HideInInspector] public PlayerUIHudManager hudManager;
+
     [Tooltip("Network Setting")]
-    [SerializeField]
-    private bool startAsClient = false;
+    [SerializeField] private bool startAsClient = false;
 
     private void Awake()
     {
@@ -21,6 +22,8 @@ public class PlayerUIManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        hudManager = GetComponentInChildren<PlayerUIHudManager>();
     }
 
     private void Start()

@@ -203,6 +203,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "UI",
+            "id": "a1f4b3a7-2f37-471f-bf9b-451f26f36f64",
+            "actions": [
+                {
+                    "name": "Delete",
+                    "type": "Button",
+                    "id": "9540b1d4-9190-4b3d-9707-888a73254904",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "19bcbc34-f91e-48aa-9a8e-766b2dc8e943",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Delete",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
