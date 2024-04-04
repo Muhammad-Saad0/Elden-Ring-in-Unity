@@ -24,6 +24,7 @@ public class PlayerInputManager : MonoBehaviour
     [Header("Player Action Variables")]
     public bool performDodge = false;
     public bool sprintInput = false;
+    public bool jumpInput = false;
 
     private void Awake()
     {
@@ -49,6 +50,11 @@ public class PlayerInputManager : MonoBehaviour
         instance.enabled = false;
     }
 
+    private void Update()
+    {
+        HandleJumpInput();
+    }
+
     private void HandleSceneChange(Scene oldScene, Scene newScene)
     {
         //ENABLE THE INPUTS ONLY ON WORLD SCENE
@@ -69,13 +75,16 @@ public class PlayerInputManager : MonoBehaviour
         {
             playerControls = new PlayerControls();
 
-            playerControls.PlayerMovement.Movement.performed += assignMovementInputValue;
-            playerControls.CameraMovement.Movement.performed += assignCameraInputValue;
-            playerControls.PlayerActions.Dodge.performed += assignDodgeInputValue;
+            playerControls.PlayerMovement.Movement.performed += AssignMovementInputValue;
+            playerControls.CameraMovement.Movement.performed += AssignCameraInputValue;
+            playerControls.PlayerActions.Dodge.performed += AssignDodgeInputValue;
 
             //  SPRINTING INPUT
             playerControls.PlayerActions.Sprint.performed += i => sprintInput = true;
             playerControls.PlayerActions.Sprint.canceled += i => sprintInput = false;
+
+            //  JUMP INPUT
+            playerControls.PlayerActions.Jump.performed += i => jumpInput = true;
         }
 
         //SUBSCRIBE TO THE ACTION EVENT
@@ -100,7 +109,7 @@ public class PlayerInputManager : MonoBehaviour
         }
     }
 
-    private void assignMovementInputValue(InputAction.CallbackContext context)
+    private void AssignMovementInputValue(InputAction.CallbackContext context)
     {
         Vector2 playerMovementInput = context.ReadValue<Vector2>();
         horizontalInput = playerMovementInput.x;
@@ -120,15 +129,25 @@ public class PlayerInputManager : MonoBehaviour
         }
     }
 
-    private void assignCameraInputValue(InputAction.CallbackContext context)
+    private void AssignCameraInputValue(InputAction.CallbackContext context)
     {
         Vector2 playerCameraMovementInput = context.ReadValue<Vector2>();
         horizontalCameraInput = playerCameraMovementInput.x;
         verticalCameraInput = playerCameraMovementInput.y;
     }
 
-    private void assignDodgeInputValue(InputAction.CallbackContext context)
+    private void AssignDodgeInputValue(InputAction.CallbackContext context)
     {
         performDodge = true;
+    }
+
+    private void HandleJumpInput()
+    {
+        if (jumpInput)
+        {
+            jumpInput = false;
+
+            playerManager.playerLocomotionManager.HandleJumpAction();
+        }
     }
 }

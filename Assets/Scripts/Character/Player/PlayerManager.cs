@@ -25,6 +25,7 @@ public class PlayerManager : CharacterManager
     {
         base.Update();
 
+
         //DONT PERFORM ANY MOVEMENT LOGIC IF WE ARE NOT THE OWNER
         if (!IsOwner)
             return;

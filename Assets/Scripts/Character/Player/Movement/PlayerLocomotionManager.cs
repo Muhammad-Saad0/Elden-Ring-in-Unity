@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 using System;
@@ -25,6 +23,15 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     [SerializeField] private float sprintingStaminaReductionTimer = 0f;
     [SerializeField] private float sprintingStaminaReductionInterval = 0.1f;
 
+    //  JUMP VARIABLES
+    [SerializeField] private float jumpStaminaCost = 15f;
+    [SerializeField] private float jumpHeight = 2f;
+    [SerializeField] private float jumpForwardMovementSpeed = 4f;
+    [SerializeField] private float freeFallMovementSpeed = 2f;
+
+    private Vector3 jumpDirection;
+    private Vector3 freeFallMoveDirection;
+
     private PlayerManager playerManager;
 
     override protected void Awake()
@@ -49,10 +56,12 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         //  HANDLE MOVEMENT
         HandleGroundedMovement();
         HandleRotationMovement();
+        HandleJumpMovement();
+        HandleFreeFallMovement();
 
         //  HANDLE PLAYER ACTIONS
         HandlePlayerActions();
-    } 
+    }
 
     private void HandleGroundedMovement()
     {
@@ -125,6 +134,32 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         transform.rotation = lookRotation; 
     }
 
+    //  THIS FUNCTION HANDLES WHICH DIRECTION PLAYER SHOULD BE MOVING IN WHEN IT IS IN MID JUMP
+    private void HandleJumpMovement()
+    {
+        if (playerManager.isJumping)
+        {
+            playerManager.characterController.Move(jumpDirection * jumpForwardMovementSpeed * Time.deltaTime);
+        }
+    }
+
+    //  THIS FUNCTION HANDLES MID AIR MOVEMENTS INPUTED BY THE USER.
+    private void HandleFreeFallMovement()
+    {
+        if (!playerManager.isGrounded)
+        {
+            freeFallMoveDirection = Vector3.zero;
+            freeFallMoveDirection = PlayerCamera.instance.cameraObject.transform.forward * PlayerInputManager.instance.verticalInput;
+            freeFallMoveDirection += PlayerCamera.instance.cameraObject.transform.right * PlayerInputManager.instance.horizontalInput;
+
+            freeFallMoveDirection.y = 0;
+            freeFallMoveDirection.Normalize();
+            
+            playerManager.characterController.Move(freeFallMoveDirection * freeFallMovementSpeed * Time.deltaTime);
+        }
+    }
+
+    //  PLAYER ACTIONS
     private void HandlePlayerActions()
     {
         HandleDodgeAction();
@@ -166,6 +201,74 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
                 playerManager.playerAnimationController.PlayTargetAnimation("Back_Step_01", true);
             }
         }
+    }
+
+    public void HandleJumpAction()
+    {
+        if (playerManager.isPerformingAction)
+                return;
+
+        if (playerManager.playerNetworkManager.currentStamina.Value < jumpStaminaCost)
+                return;
+
+        if (!playerManager.isGrounded)
+                return;
+
+        if (playerManager.isJumping)
+                return;
+
+        //  2ND PARAMETER IS APPLYING ROOT MOTION
+        playerManager.playerAnimationController.PlayTargetAnimation("Main_Jump_Start_01", false);
+        playerManager.isJumping = true;
+
+        playerManager.playerNetworkManager.currentStamina.Value -= jumpStaminaCost;
+
+        //  FINDING THE JUMP DIRECTION JUST WHEN WE JUMPED
+        //  We will keep moving in this direction mid jump.
+        if (playerManager.isJumping)
+        {
+            jumpDirection = Vector3.zero;
+
+            jumpDirection = PlayerCamera.instance.cameraObject.transform.forward * PlayerInputManager.instance.verticalInput;
+            jumpDirection += PlayerCamera.instance.cameraObject.transform.right * PlayerInputManager.instance.horizontalInput;
+            jumpDirection.y = 0;
+
+            if (jumpDirection != Vector3.zero)
+            {
+                if (playerManager.playerNetworkManager.sprintingValue.Value)
+                {
+                    //  APPLY THE VELOCITY TO FULLEST WHEN SPRINTING
+                    jumpDirection *= 1;
+                }
+                //  PLAYER IS RUNNING (NOT SPRINTING).
+                else if (moveAmount > 0.5)
+                {
+                    jumpDirection *= 0.5f;
+                }
+                //  PLAYER IS WALKING.
+                else if (moveAmount <= 0.5)
+                {
+                    jumpDirection *= 0.25f;
+                }
+            }
+        }
+    }
+
+    //  THIS FUNCTION WILL RUN ON ANIMATION EVENTS
+    /*  
+     *  Whenever we are at the point in animation where the player 
+     *  is about to go up we want an upward velocity to lift
+        our player upwards so we will add this to "ANIMATION EVENT" 
+
+        @ ANIMATION EVENT:
+        If we give the name of this function in animation event then every time 
+        that animation is playing and the object has a script attached to it which has a 
+        PUBLIC function name the same as we entered on the event then that function will run 
+    */
+    public void ApplyJumpVelocity()
+    {
+        //  WE ARE FINDING VELOCITY TO MOVE THE CHARACTER RESPECTIVE OF THE JUMP HEIGHT SET.
+        yVelocity.y = Mathf.Sqrt(jumpHeight * -2 * gravityForce);
     }
 
     private void HandleSprintAction()

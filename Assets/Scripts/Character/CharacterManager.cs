@@ -11,6 +11,8 @@ public class CharacterManager : NetworkBehaviour
 
     [Header("Flags")]
     public bool isPerformingAction = false;
+    public bool isGrounded = true;
+    public bool isJumping = false;
     public bool applyRootMotion = false;
     public bool canMove = true;
     public bool canRotate = true;
