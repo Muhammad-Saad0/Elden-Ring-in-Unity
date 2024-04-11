@@ -31,6 +31,14 @@ public class CharacterStatsManager : MonoBehaviour
         return maxStamina;
     }
 
+    public int CalculateMaxHealthBasedOnVitalityLevel(int vitality)
+    {
+        int maxHealth;
+
+        maxHealth = vitality * 15;
+        return maxHealth;
+    }
+
     public void RegenerateStamina()
     {
         //  ONLY OWNER SHOULD REGENERATE STAMINA AND WE ARE CHECKING ISOWNER BEFORE CALLING THIS FUNCTION

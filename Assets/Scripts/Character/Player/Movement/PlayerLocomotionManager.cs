@@ -177,8 +177,6 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
             if (moveAmount > 0)
             {
-                //  PERFORM A ROLL
-
                 //  Rotate the player in direction where we want to roll
                 rollDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalInput;
                 rollDirection += PlayerCamera.instance.cameraObject.transform.right * horizontalInput;

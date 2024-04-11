@@ -93,7 +93,8 @@ public class PlayerInputManager : MonoBehaviour
 
     /* THIS IS FOR TESTING
        enable the inputs only if the window is focused
-       so that the inputs dont register on both windows */
+       so that the inputs dont register on both windows
+    */
     private void OnApplicationFocus(bool focus)
     {
         if(enabled)

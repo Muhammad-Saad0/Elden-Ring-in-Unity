@@ -108,7 +108,7 @@ public class SaveGameManager : MonoBehaviour
         {
             currentCharacterSlot = CharacterSaveSlot.CharacterSaveSlot_01;
             currentCharacterData = new CharacterSaveData();
-            StartCoroutine(LoadWorldScene());
+            NewGame();
             return;
         }
 
@@ -118,7 +118,7 @@ public class SaveGameManager : MonoBehaviour
         {
             currentCharacterSlot = CharacterSaveSlot.CharacterSaveSlot_02;
             currentCharacterData = new CharacterSaveData();
-            StartCoroutine(LoadWorldScene());
+            NewGame();
             return;
         }
 
@@ -128,7 +128,7 @@ public class SaveGameManager : MonoBehaviour
         {
             currentCharacterSlot = CharacterSaveSlot.CharacterSaveSlot_03;
             currentCharacterData = new CharacterSaveData();
-            StartCoroutine(LoadWorldScene());
+            NewGame();
             return;
         }
 
@@ -138,7 +138,7 @@ public class SaveGameManager : MonoBehaviour
         {
             currentCharacterSlot = CharacterSaveSlot.CharacterSaveSlot_04;
             currentCharacterData = new CharacterSaveData();
-            StartCoroutine(LoadWorldScene());
+            NewGame();
             return;
         }
 
@@ -148,7 +148,7 @@ public class SaveGameManager : MonoBehaviour
         {
             currentCharacterSlot = CharacterSaveSlot.CharacterSaveSlot_05;
             currentCharacterData = new CharacterSaveData();
-            StartCoroutine(LoadWorldScene());
+            NewGame();
             return;
         }
 
@@ -157,6 +157,17 @@ public class SaveGameManager : MonoBehaviour
         TitleScreenManager.instance.OpenNoCharacterSlotPopUp();
     }
     
+    public void NewGame()
+    {
+        //  SET THE STATS FOR NEW GAME
+        player.playerNetworkManager.endurance.Value = 10;
+        player.playerNetworkManager.vitality.Value = 10;
+
+        SaveGame();
+        LoadGame();
+        StartCoroutine(LoadWorldScene());
+    }
+
     public void SaveGame()
     {
         //  FIND THE NAME OF THE FILE WE WILL SAVE TO
@@ -169,6 +180,10 @@ public class SaveGameManager : MonoBehaviour
 
         //  HERE WE WILL FIND THE CURRENT CHARACTER DATA AND THEN WE WILL SAVE IT.
         SaveCharacterDataToCurrentCharacterData();
+
+        //  @ DESCRIPTION:
+        /*  It creates the new file if the file already doesnt exists
+            if it does it overwrites the file with the same name */
         saveFileWriter.CreateNewCharacterSaveFile(currentCharacterData);
     }
 
@@ -184,8 +199,8 @@ public class SaveGameManager : MonoBehaviour
 
         currentCharacterData = saveFileWriter.LoadSaveFile();
 
-        StartCoroutine(LoadWorldScene());
         LoadCharacterDataFromCurrentCharacterSaveData();
+        StartCoroutine(LoadWorldScene());
     }
 
     public void DeleteGame(CharacterSaveSlot characterSlot)
@@ -209,6 +224,9 @@ public class SaveGameManager : MonoBehaviour
         currentCharacterData.xPosition = player.transform.position.x;
         currentCharacterData.yPosition = player.transform.position.y;
         currentCharacterData.zPosition = player.transform.position.z;
+
+        currentCharacterData.endurance = player.playerNetworkManager.endurance.Value;
+        currentCharacterData.vitality = player.playerNetworkManager.vitality.Value;
     }
 
     //  THIS FUNCTION FILLS IN THE CHARACTER DATA FROM currentCharacterSaveData VARIABLE
@@ -223,6 +241,26 @@ public class SaveGameManager : MonoBehaviour
             currentCharacterData.zPosition);
 
         player.transform.position = playerPosition;
+
+        int loadedEndurance = currentCharacterData.endurance;
+        int loadedVitality = currentCharacterData.endurance;
+
+        //  SETTING UP PLAYER STATS.
+        player.playerNetworkManager.endurance.Value = loadedEndurance;
+        player.playerNetworkManager.vitality.Value = loadedVitality;
+
+        int maxStamina = player.playerStatsManager.CalculateMaxStaminaBasedOnEnduranceLevel(loadedEndurance);
+        int maxHealth = player.playerStatsManager.CalculateMaxHealthBasedOnVitalityLevel(loadedVitality);
+
+        //  SETTING UP STAMINA
+        player.playerNetworkManager.maximumStamina.Value = maxStamina;
+        PlayerUIManager.instance.hudManager.SetMaxStaminaValue(maxStamina);
+        player.playerNetworkManager.currentStamina.Value = maxStamina;
+
+        //  SETTING UP HEALTH
+        player.playerNetworkManager.maximumHealth.Value = maxHealth;
+        PlayerUIManager.instance.hudManager.SetMaxHealthValue(maxHealth);
+        player.playerNetworkManager.currentHealth.Value = maxHealth;
     }
 
     //  THIS FUNCTION GETS ALL SAVE FILES AND STORES IT IN THE VARIABLES

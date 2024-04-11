@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
-using UnityEngine.SceneManagement;
 
 public class CharacterLocomotionManager : MonoBehaviour
 {
@@ -30,10 +26,6 @@ public class CharacterLocomotionManager : MonoBehaviour
     {
         CheckGrounded();
 
-        //  DONT RUN THE FALLING LOGIC IF IT IS NOT THE WORLD SCENE
-        if (SceneManager.GetActiveScene().buildIndex == 0)
-            return;
-
         if (character.isGrounded)
         {
             //  IF WE ARE GROUNDED AND Y VELOCITY IS NOT POSITIVE (meaning we are not trying to jump).
@@ -51,7 +43,6 @@ public class CharacterLocomotionManager : MonoBehaviour
         {
             if (!character.isJumping && !fallingVelocityHasBeenSet)
             {
-                Debug.Log("inside very weird if.");
                 fallingVelocityHasBeenSet = true;
 
                 //  WE WILL START THE FALL WITH THIS VELOCITY AND INCREASE IT OVER TIME

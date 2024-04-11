@@ -6222,6 +6222,7 @@ GameObject:
   - component: {fileID: 7054106833096726965}
   - component: {fileID: 7297651176241088859}
   - component: {fileID: 7922289625653478464}
+  - component: {fileID: 5689976076572749871}
   - component: {fileID: 3509713145289188256}
   - component: {fileID: 1761086752574069630}
   m_Layer: 7
@@ -6456,6 +6457,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animationDamptime: 0.1
+--- !u!114 &5689976076572749871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1948535115976630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dcf7722d920ca94c99fc22ee065edce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectToTest: {fileID: 11400000, guid: f560f15ed9400124e8f1e6702b818aad, type: 2}
+  testEffect: 0
 --- !u!143 &3509713145289188256
 CharacterController:
   m_ObjectHideFlags: 0

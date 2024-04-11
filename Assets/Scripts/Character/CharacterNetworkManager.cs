@@ -32,11 +32,24 @@ public class CharacterNetworkManager : NetworkBehaviour
 
     [Header("Stats")]
     //  STAMINA VARIABLES
-    [HideInInspector] public NetworkVariable<int> endurance = new NetworkVariable<int>
-        (10, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<int> endurance = new NetworkVariable<int>
+        (0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<int> vitality = new NetworkVariable<int>
+        (0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
+    [Header("Resources")]
+    //  STAMINA
     [HideInInspector] public NetworkVariable<float> currentStamina = new NetworkVariable<float>
         (0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     [HideInInspector] public NetworkVariable<float> maximumStamina = new NetworkVariable<float>
+        (0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
+    //  HEALTH
+    [HideInInspector]
+    public NetworkVariable<float> currentHealth = new NetworkVariable<float>
+        (0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    [HideInInspector]
+    public NetworkVariable<float> maximumHealth = new NetworkVariable<float>
         (0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     protected virtual void Awake()
